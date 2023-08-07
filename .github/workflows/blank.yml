@@ -1,0 +1,43 @@
+import time
+import pyautogui
+from PIL import ImageGrab, Image
+import schedule
+a = 0
+#事先对按钮截图
+jietu1 = Image.open("WinRAR.png")
+jietu2 = Image.open("始终.png")
+jietu3 = Image.open("定位.png")
+#截图当前屏幕并找到之前加载的按钮截图
+def check():
+    image1 = pyautogui.locateOnScreen(jietu1, grayscale=True,confidence=.9)
+    if image1 == None: 
+        pass
+    else:
+        x1,y1,width1,height1 = image1
+        image2 = pyautogui.locateOnScreen(jietu2, grayscale=True,confidence=.9)
+        x2,y2,width2,height2 = image2
+        #光标移动到屏幕上的这个位置
+        #pyautogui.moveTo(x1 + width1 / 2, y1 + height1 / 2, duration = 0.01, tween=pyautogui.easeInQuad)
+        pyautogui.click(x1 + width1 / 2,y1 + height1 / 2,clicks= 1 ,interval= 0 ,duration= 0.01 )
+        time.sleep(0.1)
+        pyautogui.click(x2 + width2 / 2,y2 + height2 / 2,clicks= 1 ,interval= 0 ,duration= 0.01 )
+        time.sleep(0.5)
+        image3 = pyautogui.locateOnScreen(jietu3, grayscale=True,confidence=.9)
+        x3,y3,width3,height3 = image3
+        pyautogui.click(x3 + width3 / 2, y3 + height3 / 2,clicks= 2 ,interval= 0.1 ,duration= 0.01 )
+        time.sleep(0.1)
+
+
+
+
+
+
+schedule.every(0.1).seconds.do(check)
+while True:
+    schedule.run_pending()
+    time.sleep(0.1)
+    a += 1
+
+        
+        
+        
